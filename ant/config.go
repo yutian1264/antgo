@@ -37,22 +37,17 @@ type Conf struct {
 
 //配置初始化
 func init() {
-	//创建  Conf
 	BConf = newConf()
 	confPath := filepath.Join("", "conf", "ant.conf")
-	//读取文件并赋值 conf
 	parseConfig(confPath)
-	//tpl 配置 后缀检查
 	if TplExtCheck(BConf.TplExt) == false {
 		log.Fatal("`tpl_ext` can only be html,htm,tpl")
 	}
-	//如果当前运行为 develop 输出对应的 conf配置
 	if BConf.RunMode == DEV {
 		log.Println(BConf)
 	}
 }
 
-//生产conf
 func newConf() *Conf {
 	return &Conf{
 		Port:      8080,
@@ -64,7 +59,6 @@ func newConf() *Conf {
 	}
 }
 
-//解析 conf.xml
 func parseConfig(confPath string){
 	//文件读取
 	antlib.AntInit(confPath)
@@ -139,14 +133,12 @@ func (c *Conf) getConf(key string) interface{} {
 	}
 
 }
-// SetViewsPath sets view directory path in beego application.
+
 func SetViewsPath(path string) *Conf {
 	BConf.TplPATH = path
 	return BConf
 }
 
-// SetStaticPath sets static directory path and proper url pattern in beego application.
-// if beego.SetStaticPath("static","public"), visit /static/* to load static file in folder "public".
 func SetStaticPath(url string, path string) *Conf {
 	if !strings.HasPrefix(url, "/") {
 		url = "/" + url
@@ -158,7 +150,7 @@ func SetStaticPath(url string, path string) *Conf {
 	return BConf
 }
 
-// DelStaticPath removes the static folder setting in this url pattern in beego application.
+
 func DelStaticPath(url string) *Conf {
 	if !strings.HasPrefix(url, "/") {
 		url = "/" + url

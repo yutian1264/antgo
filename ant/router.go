@@ -52,7 +52,6 @@ func (this Controller) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	if BConf.RunMode == DEV {
 		log.Println(req.URL.String())
 	}
-
 	//去掉左边 /
 	if strings.Index(url, "/") != -1 {
 		url = strings.TrimLeft(url, "/")
@@ -72,10 +71,8 @@ func (this Controller) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		method := vc.MethodByName(v.funcName)
 		method.Call(param)
 	} else {
-
 		staticFilePro(w, req, url)
 	}
-
 }
 
 func staticFilePro(w http.ResponseWriter, req *http.Request, url_path string) {
@@ -104,5 +101,4 @@ func staticFilePro(w http.ResponseWriter, req *http.Request, url_path string) {
 		//运行文件服务 如果不存在为 404 如果存在读取文件 并显示
 		http.ServeFile(w, req, static_path)
 	}
-
 }
